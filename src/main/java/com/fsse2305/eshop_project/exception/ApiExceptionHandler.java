@@ -23,4 +23,15 @@ public class ApiExceptionHandler {
         //2.return response entity
         return new ResponseEntity<>(apiException, badRequest);
     }
+
+    @ExceptionHandler(value = {UpdateCartItemException.class})
+    public ResponseEntity<Object> handleApiRequestException(UpdateCartItemException e) {
+        HttpStatus badRequest = HttpStatus.BAD_REQUEST;
+        ApiException apiException = new ApiException(
+                e.getMessage(),
+                badRequest,
+                ZonedDateTime.now(ZoneId.of("Asia/Hong_Kong"))
+        );
+        return new ResponseEntity<>(apiException, badRequest);
+    }
 }
