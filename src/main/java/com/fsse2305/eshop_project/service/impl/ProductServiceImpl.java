@@ -1,8 +1,8 @@
 package com.fsse2305.eshop_project.service.impl;
 
-import com.fsse2305.eshop_project.data.product.domainobject.ProductDetailsData;
+import com.fsse2305.eshop_project.data.product.domainObject.ProductDetailsData;
 import com.fsse2305.eshop_project.data.product.entity.ProductEntity;
-import com.fsse2305.eshop_project.exception.CannotFoundProductException;
+import com.fsse2305.eshop_project.exception.ProductNotFoundException;
 import com.fsse2305.eshop_project.repository.ProductRepository;
 import com.fsse2305.eshop_project.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +37,16 @@ public class ProductServiceImpl implements ProductService {
             if(productEntity.isPresent()){
                 return new ProductDetailsData(productEntity.get());
             }
-            throw new CannotFoundProductException("Cannot found productId: "+productId);
+            throw new ProductNotFoundException("Cannot found productId: "+productId);
+    }
+
+    @Override
+    public ProductEntity getProductEntity(Integer pid){
+        Optional<ProductEntity> productEntity = productRepository.findByPid(pid);
+        if(productEntity.isPresent()){
+            return productEntity.get();
+        }
+        throw new ProductNotFoundException("Cannot found productId: "+pid);
     }
 
 

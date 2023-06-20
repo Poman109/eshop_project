@@ -1,27 +1,31 @@
-package com.fsse2305.eshop_project.data.product.dto;
+package com.fsse2305.eshop_project.data.cart.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fsse2305.eshop_project.data.product.domainObject.ProductDetailsData;
+import com.fsse2305.eshop_project.data.cart.domainObject.CartItemDetailsData;
 
 import java.math.BigDecimal;
 
-public class ProductDetailsResponseDto {
+public class CartItemDetailResponseDto {
+    @JsonProperty("pid")
     private Integer pid;
+    @JsonProperty("name")
     private String name;
-    private String description;
     @JsonProperty("image_url")
     private String imageUrl;
+    @JsonProperty("price")
     private BigDecimal price;
+    @JsonProperty("cart_quantity")
+    private Integer quantity;
+    @JsonProperty("stock")
     private Integer stock;
 
-    public ProductDetailsResponseDto(ProductDetailsData productDetailsData){
-        this.pid = productDetailsData.getPid();
-        this.name = productDetailsData.getName();
-        this.description = productDetailsData.getDescription();
-        this.imageUrl = productDetailsData.getImageUrl();
-        this.price = productDetailsData.getPrice();
-        this.stock = productDetailsData.getStock();
-
+    public CartItemDetailResponseDto(CartItemDetailsData creatCartItemData){
+        this.pid = creatCartItemData.getPid().getPid();
+        this.name = creatCartItemData.getPid().getName();
+        this.imageUrl = creatCartItemData.getPid().getImageUrl();
+        this.price = creatCartItemData.getPid().getPrice();
+        this.quantity = creatCartItemData.getQuantity();
+        this.stock = creatCartItemData.getPid().getStock();
     }
 
     public Integer getPid() {
@@ -40,14 +44,6 @@ public class ProductDetailsResponseDto {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public String getImageUrl() {
         return imageUrl;
     }
@@ -62,6 +58,14 @@ public class ProductDetailsResponseDto {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 
     public Integer getStock() {

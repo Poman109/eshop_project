@@ -1,7 +1,7 @@
 package com.fsse2305.eshop_project.data.product.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fsse2305.eshop_project.data.product.domainobject.ProductDetailsData;
+import com.fsse2305.eshop_project.data.product.domainObject.ProductDetailsData;
 
 import java.math.BigDecimal;
 

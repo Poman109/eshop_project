@@ -10,8 +10,8 @@ import java.time.ZonedDateTime;
 
 @ControllerAdvice
 public class ApiExceptionHandler {
-    @ExceptionHandler(value = {CannotFoundProductException.class})
-    public ResponseEntity<Object> handleApiRequestException(CannotFoundProductException c) {
+    @ExceptionHandler(value = {ProductNotFoundException.class})
+    public ResponseEntity<Object> handleApiRequestException(ProductNotFoundException c) {
         //1.Create payload containing exception details
 
         HttpStatus badRequest = HttpStatus.BAD_REQUEST;

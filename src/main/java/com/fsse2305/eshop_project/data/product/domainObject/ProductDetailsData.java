@@ -1,4 +1,4 @@
-package com.fsse2305.eshop_project.data.product.domainobject;
+package com.fsse2305.eshop_project.data.product.domainObject;
 
 import com.fsse2305.eshop_project.data.product.entity.ProductEntity;
 
@@ -11,6 +11,7 @@ public class ProductDetailsData {
     private String imageUrl;
     private BigDecimal price;
     private Integer stock;
+
 
     public ProductDetailsData(ProductEntity productEntity) {
         this.pid = productEntity.getPid();

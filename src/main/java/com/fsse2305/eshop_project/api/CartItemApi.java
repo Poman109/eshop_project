@@ -1,5 +1,8 @@
 package com.fsse2305.eshop_project.api;
 
+import com.fsse2305.eshop_project.data.cart.domainObject.CreatedCartItemData;
+import com.fsse2305.eshop_project.data.cart.dto.CartItemDetailResponseDto;
+import com.fsse2305.eshop_project.data.cart.dto.CreateCartItemResponseDto;
 import com.fsse2305.eshop_project.data.user.domainObject.FirebaseUserData;
 import com.fsse2305.eshop_project.service.CartItemService;
 import com.fsse2305.eshop_project.utility.JwtUtil;
@@ -20,11 +23,15 @@ public class CartItemApi {
         this.cartItemService = cartItemService;
     }
 
+
     @PutMapping("/{pid}/{quantity}")
-    public void putCartItem(JwtAuthenticationToken jwtToken, @PathVariable Integer pid, @PathVariable Integer quantity){
+    public CreateCartItemResponseDto putCartItem(JwtAuthenticationToken jwtToken, @PathVariable Integer pid, @PathVariable Integer quantity){
         FirebaseUserData firebaseUserData = JwtUtil.getFirebaseUserData(jwtToken);
-        cartItemService.putCartItem(firebaseUserData,pid,quantity);
+        return new CreateCartItemResponseDto(cartItemService.putCartItem(firebaseUserData,pid,quantity));
+
     }
+
+
 
 
 }
