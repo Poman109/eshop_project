@@ -1,7 +1,7 @@
 package com.fsse2305.eshop_project.service.impl;
 
-import com.fsse2305.eshop_project.data.productdata.domainobject.ProductDetailsData;
-import com.fsse2305.eshop_project.data.productdata.entity.ProductEntity;
+import com.fsse2305.eshop_project.data.product.domainobject.ProductDetailsData;
+import com.fsse2305.eshop_project.data.product.entity.ProductEntity;
 import com.fsse2305.eshop_project.exception.CannotFoundProductException;
 import com.fsse2305.eshop_project.repository.ProductRepository;
 import com.fsse2305.eshop_project.service.ProductService;

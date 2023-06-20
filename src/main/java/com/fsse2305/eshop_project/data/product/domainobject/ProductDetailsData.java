@@ -1,7 +1,6 @@
-package com.fsse2305.eshop_project.data.productdata.domainobject;
+package com.fsse2305.eshop_project.data.product.domainobject;
 
-import com.fsse2305.eshop_project.data.productdata.entity.ProductEntity;
-import jakarta.persistence.Column;
+import com.fsse2305.eshop_project.data.product.entity.ProductEntity;
 
 import java.math.BigDecimal;
 

@@ -1,10 +1,9 @@
 package com.fsse2305.eshop_project.api;
 
-import com.fsse2305.eshop_project.data.productdata.domainobject.ProductDetailsData;
-import com.fsse2305.eshop_project.data.productdata.dto.GetAllProductResponseDto;
-import com.fsse2305.eshop_project.data.productdata.dto.ProductDetailsResponseDto;
+import com.fsse2305.eshop_project.data.product.domainobject.ProductDetailsData;
+import com.fsse2305.eshop_project.data.product.dto.GetAllProductResponseDto;
+import com.fsse2305.eshop_project.data.product.dto.ProductDetailsResponseDto;
 import com.fsse2305.eshop_project.service.ProductService;
-import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

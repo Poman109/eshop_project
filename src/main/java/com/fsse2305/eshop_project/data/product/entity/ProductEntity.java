@@ -1,35 +1,33 @@
-package com.fsse2305.eshop_project.data.productdata.dto;
+package com.fsse2305.eshop_project.data.product.entity;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fsse2305.eshop_project.data.productdata.domainobject.ProductDetailsData;
+import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 
-public class ProductDetailsResponseDto {
+@Entity
+@Table(name="product")
+public class ProductEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer pid;
+    @Column(nullable = false)
     private String name;
     private String description;
-    @JsonProperty("image_url")
     private String imageUrl;
+    @Column(nullable = false)
     private BigDecimal price;
+    @Column(nullable = false)
     private Integer stock;
 
-    public ProductDetailsResponseDto(ProductDetailsData productDetailsData){
-        this.pid = productDetailsData.getPid();
-        this.name = productDetailsData.getName();
-        this.description = productDetailsData.getDescription();
-        this.imageUrl = productDetailsData.getImageUrl();
-        this.price = productDetailsData.getPrice();
-        this.stock = productDetailsData.getStock();
-
+    public ProductEntity() {
     }
 
     public Integer getPid() {
         return pid;
     }
 
-    public void setPid(Integer pid) {
-        this.pid = pid;
+    public void setPid(Integer productId) {
+        this.pid = productId;
     }
 
     public String getName() {

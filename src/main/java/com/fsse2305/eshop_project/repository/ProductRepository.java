@@ -1,7 +1,6 @@
 package com.fsse2305.eshop_project.repository;
 
-import com.fsse2305.eshop_project.data.productdata.domainobject.ProductDetailsData;
-import com.fsse2305.eshop_project.data.productdata.entity.ProductEntity;
+import com.fsse2305.eshop_project.data.product.entity.ProductEntity;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;

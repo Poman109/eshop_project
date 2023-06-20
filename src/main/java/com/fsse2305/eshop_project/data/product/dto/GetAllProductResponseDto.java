@@ -1,7 +1,7 @@
-package com.fsse2305.eshop_project.data.productdata.dto;
+package com.fsse2305.eshop_project.data.product.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fsse2305.eshop_project.data.productdata.domainobject.ProductDetailsData;
+import com.fsse2305.eshop_project.data.product.domainobject.ProductDetailsData;
 
 import java.math.BigDecimal;
 
@@ -62,8 +62,6 @@ public class GetAllProductResponseDto {
     public void setStock(ProductDetailsData productDetailsData) {
         if (productDetailsData.getStock()>0){
             this.stock = true;
-        } else {
-            this.stock = false;
         }
     }
 }
