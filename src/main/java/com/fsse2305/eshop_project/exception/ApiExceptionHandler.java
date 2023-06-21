@@ -24,8 +24,8 @@ public class ApiExceptionHandler {
         return new ResponseEntity<>(apiException, badRequest);
     }
 
-    @ExceptionHandler(value = {UpdateCartItemException.class})
-    public ResponseEntity<Object> handleApiRequestException(UpdateCartItemException e) {
+    @ExceptionHandler(value = {UpdateCartItemNotAllowedException.class})
+    public ResponseEntity<Object> handleApiRequestException(UpdateCartItemNotAllowedException e) {
         HttpStatus badRequest = HttpStatus.BAD_REQUEST;
         ApiException apiException = new ApiException(
                 e.getMessage(),
