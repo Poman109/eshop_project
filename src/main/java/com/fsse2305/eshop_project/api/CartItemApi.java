@@ -1,10 +1,9 @@
 package com.fsse2305.eshop_project.api;
 
 import com.fsse2305.eshop_project.data.cart.domainObject.CartItemDetailsData;
-import com.fsse2305.eshop_project.data.cart.domainObject.CreatedCartItemData;
 import com.fsse2305.eshop_project.data.cart.dto.CartItemDetailResponseDto;
 import com.fsse2305.eshop_project.data.cart.dto.CreateCartItemResponseDto;
-import com.fsse2305.eshop_project.data.cart.dto.UpdateCartItemResponseDto;
+import com.fsse2305.eshop_project.data.cart.dto.DeleteCartItemResponseDto;
 import com.fsse2305.eshop_project.data.user.domainObject.FirebaseUserData;
 import com.fsse2305.eshop_project.service.CartItemService;
 import com.fsse2305.eshop_project.utility.JwtUtil;
@@ -44,10 +43,16 @@ public class CartItemApi {
     }
 
     @PatchMapping("/{pid}/{quantity}")
-    public UpdateCartItemResponseDto updateCartItemQuantity(JwtAuthenticationToken jwtToken, @PathVariable Integer pid, @PathVariable Integer quantity) {
+    public CartItemDetailResponseDto updateCartItemQuantity(JwtAuthenticationToken jwtToken, @PathVariable Integer pid, @PathVariable Integer quantity) {
         FirebaseUserData firebaseUserData = JwtUtil.getFirebaseUserData(jwtToken);
 
-        return new UpdateCartItemResponseDto(cartItemService.updateCartItemQuantity(firebaseUserData,pid,quantity));
+        return new CartItemDetailResponseDto(cartItemService.updateCartItemQuantity(firebaseUserData,pid,quantity));
+    }
+
+    @DeleteMapping("/{pid}")
+    public DeleteCartItemResponseDto deleteCartItem(JwtAuthenticationToken jwtToken, @PathVariable Integer pid){
+        FirebaseUserData firebaseUserData = JwtUtil.getFirebaseUserData(jwtToken);
+        return new DeleteCartItemResponseDto(cartItemService.deletedCartItem(firebaseUserData,pid));
     }
 
 

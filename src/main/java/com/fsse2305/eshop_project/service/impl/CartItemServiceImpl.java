@@ -3,7 +3,7 @@ package com.fsse2305.eshop_project.service.impl;
 import com.fsse2305.eshop_project.data.Status;
 import com.fsse2305.eshop_project.data.cart.domainObject.CartItemDetailsData;
 import com.fsse2305.eshop_project.data.cart.domainObject.CreatedCartItemData;
-import com.fsse2305.eshop_project.data.cart.domainObject.UpdatedCartItemData;
+import com.fsse2305.eshop_project.data.cart.domainObject.DeletedCartItemData;
 import com.fsse2305.eshop_project.data.cart.entity.CartItemEntity;
 import com.fsse2305.eshop_project.data.product.entity.ProductEntity;
 import com.fsse2305.eshop_project.data.user.domainObject.FirebaseUserData;
@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CartItemServiceImpl implements CartItemService {
@@ -38,6 +39,14 @@ public class CartItemServiceImpl implements CartItemService {
         if(productEntity.getStock() < quantity){
             throw new UpdateCartItemException("Not enough stock!");
         }
+        for(CartItemEntity cartItemEntity:userEntity.getUserCartItemsArray()){
+            if(cartItemEntity.getPid().getPid()==pid){
+                throw new UpdateCartItemException("Product has been added to cart already.");
+            }
+        }
+
+
+
         CartItemEntity cartItemEntity = new CartItemEntity();
         cartItemEntity.setUid(userEntity);
         cartItemEntity.setPid(productEntity);
@@ -58,7 +67,7 @@ public class CartItemServiceImpl implements CartItemService {
     }
 
     @Override
-    public UpdatedCartItemData updateCartItemQuantity(FirebaseUserData firebaseUserData, Integer pid, Integer quantity){
+    public CartItemDetailsData updateCartItemQuantity(FirebaseUserData firebaseUserData, Integer pid, Integer quantity){
         UserEntity userEntity =userService.getEntityByFirebaseUserData(firebaseUserData);
 
         if(productService.getProductEntity(pid).getStock() < quantity){
@@ -71,9 +80,24 @@ public class CartItemServiceImpl implements CartItemService {
             }
             cartItemEntity.setQuantity(quantity);
             cartItemRepository.save(cartItemEntity);
-            return new UpdatedCartItemData(Status.SUCCESS);
+            return new CartItemDetailsData(cartItemEntity);
         }
         throw new UpdateCartItemException("Cannot update quantity");
+    }
+
+    @Override
+    public DeletedCartItemData deletedCartItem(FirebaseUserData firebaseUserData, Integer pid){
+        UserEntity userEntity =userService.getEntityByFirebaseUserData(firebaseUserData);
+        for(CartItemEntity cartItemEntity:userEntity.getUserCartItemsArray()){
+            if (cartItemEntity.getPid().getPid() != pid){
+                continue;
+            }
+            cartItemRepository.delete(cartItemEntity);
+            return new DeletedCartItemData(Status.SUCCESS );
+        }
+
+        throw new UpdateCartItemException("No product id :"+pid +"in cart.");
+
     }
 
 }

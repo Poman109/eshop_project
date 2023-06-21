@@ -2,14 +2,14 @@ package com.fsse2305.eshop_project.data.cart.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fsse2305.eshop_project.data.Status;
-import com.fsse2305.eshop_project.data.cart.domainObject.UpdatedCartItemData;
+import com.fsse2305.eshop_project.data.cart.domainObject.DeletedCartItemData;
 
-public class UpdateCartItemResponseDto {
+public class DeleteCartItemResponseDto {
     @JsonProperty("result")
     private Status status;
 
-    public UpdateCartItemResponseDto(UpdatedCartItemData updatedCartItemData) {
-        this.status = updatedCartItemData.getStatus();
+    public DeleteCartItemResponseDto(DeletedCartItemData deletedCartItemData) {
+        this.status = deletedCartItemData.getStatus();
     }
 
     public Status getStatus() {
