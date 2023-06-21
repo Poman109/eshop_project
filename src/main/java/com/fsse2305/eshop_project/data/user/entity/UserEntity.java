@@ -1,6 +1,7 @@
 package com.fsse2305.eshop_project.data.user.entity;
 
 import com.fsse2305.eshop_project.data.cart.entity.CartItemEntity;
+import com.fsse2305.eshop_project.data.transaction.entity.TransactionEntity;
 import com.fsse2305.eshop_project.data.user.domainObject.FirebaseUserData;
 import jakarta.persistence.*;
 
@@ -15,11 +16,14 @@ public class UserEntity {
     private Integer uid;
     @Column(name = "firebase_uid",unique = true)
     private String firebaseUid;
+    @Column(nullable = false)
     private String email;
 
     @OneToMany(mappedBy = "uid")
     private List<CartItemEntity> UserCartItemsArray = new ArrayList<>();
 
+    @OneToMany(mappedBy="buyerUid")
+    private List<TransactionEntity> transactionList = new ArrayList<>();
 
     public UserEntity(FirebaseUserData firebaseUserData){
         this.firebaseUid = firebaseUserData.getFirebaseUid();

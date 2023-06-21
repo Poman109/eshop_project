@@ -1,18 +1,18 @@
-package com.fsse2305.eshop_project.data.product.entity;
+package com.fsse2305.eshop_project.data.transaction.entity;
 
-import com.fsse2305.eshop_project.data.cart.entity.CartItemEntity;
-import com.fsse2305.eshop_project.data.transaction.entity.TransactionEntity;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
-@Table(name="product")
-public class ProductEntity {
+@Table(name="TransactionProduct")
+public class TransactionProductEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer tpid;
+    @ManyToOne
+    @JoinColumn(name="transaction_id",nullable = false)
+    private TransactionEntity tid;
+    @Column(nullable = false)
     private Integer pid;
     @Column(nullable = false)
     private String name;
@@ -22,21 +22,33 @@ public class ProductEntity {
     private BigDecimal price;
     @Column(nullable = false)
     private Integer stock;
+    @Column(nullable = false)
+    private Integer quantity;
+    @Column(nullable = false)
+    private BigDecimal subtotal;
 
-    @OneToMany(mappedBy = "pid")
-    private List<CartItemEntity> cartProductArray = new ArrayList<>();
+    public Integer getTpid() {
+        return tpid;
+    }
 
+    public void setTpid(Integer tpid) {
+        this.tpid = tpid;
+    }
 
+    public TransactionEntity getTid() {
+        return tid;
+    }
 
-    public ProductEntity() {
+    public void setTid(TransactionEntity tid) {
+        this.tid = tid;
     }
 
     public Integer getPid() {
         return pid;
     }
 
-    public void setPid(Integer productId) {
-        this.pid = productId;
+    public void setPid(Integer pid) {
+        this.pid = pid;
     }
 
     public String getName() {
@@ -79,11 +91,19 @@ public class ProductEntity {
         this.stock = stock;
     }
 
-    public List<CartItemEntity> getCartProductArray() {
-        return cartProductArray;
+    public Integer getQuantity() {
+        return quantity;
     }
 
-    public void setCartProductArray(List<CartItemEntity> cartProductArray) {
-        this.cartProductArray = cartProductArray;
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    public BigDecimal getSubtotal() {
+        return subtotal;
+    }
+
+    public void setSubtotal(BigDecimal subtotal) {
+        this.subtotal = subtotal;
     }
 }

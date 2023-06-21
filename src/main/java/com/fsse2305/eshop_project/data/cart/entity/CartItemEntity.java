@@ -11,11 +11,12 @@ public class CartItemEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer cid;
     @ManyToOne
-    @JoinColumn(name="product_id")
+    @JoinColumn(name="product_id",nullable = false)
     private ProductEntity pid;
     @ManyToOne
-    @JoinColumn(name="user_id")
+    @JoinColumn(name="user_id",nullable = false)
     private UserEntity uid;
+    @Column(nullable = false)
     private Integer quantity;
 
     public CartItemEntity() {
