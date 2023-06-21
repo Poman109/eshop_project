@@ -6,12 +6,12 @@ import com.fsse2305.eshop_project.data.product.domainObject.ProductDetailsData;
 
 public class CartItemDetailsData {
     private Integer cid;
-    private ProductDetailsData pid;
+    private ProductDetailsData product;
     private Integer quantity;
 
     public CartItemDetailsData(CartItemEntity cartItemEntity){
         this.cid = cartItemEntity.getCid();
-        this.pid = new ProductDetailsData(cartItemEntity.getPid());
+        this.product = new ProductDetailsData(cartItemEntity.getProduct());
         this.quantity = cartItemEntity.getQuantity();
 
     }
@@ -25,12 +25,12 @@ public class CartItemDetailsData {
         this.cid = cid;
     }
 
-    public ProductDetailsData getPid() {
-        return pid;
+    public ProductDetailsData getProduct() {
+        return product;
     }
 
-    public void setPid(ProductDetailsData pid) {
-        this.pid = pid;
+    public void setProduct(ProductDetailsData product) {
+        this.product = product;
     }
 
     public Integer getQuantity() {

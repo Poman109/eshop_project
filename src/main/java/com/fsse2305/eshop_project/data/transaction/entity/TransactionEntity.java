@@ -1,7 +1,6 @@
 package com.fsse2305.eshop_project.data.transaction.entity;
 
 import com.fsse2305.eshop_project.data.Status;
-import com.fsse2305.eshop_project.data.product.entity.ProductEntity;
 import com.fsse2305.eshop_project.data.user.entity.UserEntity;
 import jakarta.persistence.*;
 
@@ -19,16 +18,25 @@ public class TransactionEntity {
     private Integer tid;
     @ManyToOne
     @JoinColumn(name="user_id",nullable = false)
-    private UserEntity buyerUid;
+    private UserEntity User;
     @Column(nullable = false)
-    private Timestamp datatime;
+    private Timestamp datetime;
     @Column(nullable = false)
     private Status status;
     @Column(nullable = false)
     private BigDecimal total;
 
-    @OneToMany(mappedBy = "tid")
+    @OneToMany(mappedBy = "transaction")
     private List<TransactionProductEntity> transactionProductList = new ArrayList<>();
+
+    public TransactionEntity() {
+    }
+
+    public TransactionEntity(UserEntity userEntity) {
+        this.User = userEntity;
+        this.status = Status.PREPARE;
+        setDatetimeToCurrentTime();
+    }
 
     public Integer getTid() {
         return tid;
@@ -38,20 +46,12 @@ public class TransactionEntity {
         this.tid = tid;
     }
 
-    public UserEntity getBuyerUid() {
-        return buyerUid;
+    public UserEntity getUser() {
+        return User;
     }
 
-    public void setBuyerUid(UserEntity buyerUid) {
-        this.buyerUid = buyerUid;
-    }
-
-    public Timestamp getDatatime() {
-        return datatime;
-    }
-
-    public void setDatatime(Timestamp datatime) {
-        this.datatime = datatime;
+    public void setUser(UserEntity buyerUid) {
+        this.User = buyerUid;
     }
 
     public Status getStatus() {
@@ -76,5 +76,14 @@ public class TransactionEntity {
 
     public void setTransactionProductList(List<TransactionProductEntity> transactionProductList) {
         this.transactionProductList = transactionProductList;
+    }
+
+    public Timestamp getDatetime() {
+        return datetime;
+    }
+
+    public void setDatetimeToCurrentTime() {
+        long currentTimeMillis = System.currentTimeMillis();
+        this.datetime = new Timestamp(currentTimeMillis);
     }
 }

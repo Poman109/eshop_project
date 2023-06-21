@@ -19,13 +19,13 @@ public class CartItemDetailResponseDto {
     @JsonProperty("stock")
     private Integer stock;
 
-    public CartItemDetailResponseDto(CartItemDetailsData creatCartItemData){
-        this.pid = creatCartItemData.getPid().getPid();
-        this.name = creatCartItemData.getPid().getName();
-        this.imageUrl = creatCartItemData.getPid().getImageUrl();
-        this.price = creatCartItemData.getPid().getPrice();
-        this.quantity = creatCartItemData.getQuantity();
-        this.stock = creatCartItemData.getPid().getStock();
+    public CartItemDetailResponseDto(CartItemDetailsData cartItemDetailsData){
+        this.pid = cartItemDetailsData.getProduct().getPid();
+        this.name = cartItemDetailsData.getProduct().getName();
+        this.imageUrl = cartItemDetailsData.getProduct().getImageUrl();
+        this.price = cartItemDetailsData.getProduct().getPrice();
+        this.quantity = cartItemDetailsData.getQuantity();
+        this.stock = cartItemDetailsData.getProduct().getStock();
     }
 
     public Integer getPid() {

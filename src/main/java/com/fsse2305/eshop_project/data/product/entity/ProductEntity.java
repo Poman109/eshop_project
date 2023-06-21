@@ -1,7 +1,6 @@
 package com.fsse2305.eshop_project.data.product.entity;
 
 import com.fsse2305.eshop_project.data.cart.entity.CartItemEntity;
-import com.fsse2305.eshop_project.data.transaction.entity.TransactionEntity;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -23,7 +22,7 @@ public class ProductEntity {
     @Column(nullable = false)
     private Integer stock;
 
-    @OneToMany(mappedBy = "pid")
+    @OneToMany(mappedBy = "product")
     private List<CartItemEntity> cartProductArray = new ArrayList<>();
 
 

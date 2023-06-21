@@ -2,9 +2,9 @@ package com.fsse2305.eshop_project.api;
 
 import com.fsse2305.eshop_project.data.cart.domainObject.CartItemDetailsData;
 import com.fsse2305.eshop_project.data.cart.dto.CartItemDetailResponseDto;
-import com.fsse2305.eshop_project.data.cart.dto.CreateCartItemResponseDto;
-import com.fsse2305.eshop_project.data.cart.dto.DeleteCartItemResponseDto;
+import com.fsse2305.eshop_project.data.cart.dto.SuccessResponseDto;
 import com.fsse2305.eshop_project.data.user.domainObject.FirebaseUserData;
+import com.fsse2305.eshop_project.exception.UpdateCartItemNotAllowedException;
 import com.fsse2305.eshop_project.service.CartItemService;
 import com.fsse2305.eshop_project.utility.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +26,12 @@ public class CartItemApi {
 
 
     @PutMapping("/{pid}/{quantity}")
-    public CreateCartItemResponseDto putCartItem(JwtAuthenticationToken jwtToken, @PathVariable Integer pid, @PathVariable Integer quantity){
+    public SuccessResponseDto putCartItem(JwtAuthenticationToken jwtToken, @PathVariable Integer pid, @PathVariable Integer quantity){
         FirebaseUserData firebaseUserData = JwtUtil.getFirebaseUserData(jwtToken);
-        return new CreateCartItemResponseDto(cartItemService.putCartItem(firebaseUserData,pid,quantity));
-
+        if(cartItemService.putCartItem(firebaseUserData,pid,quantity)){
+            return new SuccessResponseDto();
+        }
+        throw new UpdateCartItemNotAllowedException("Cannot create");
     }
 
     @GetMapping()
@@ -50,9 +52,13 @@ public class CartItemApi {
     }
 
     @DeleteMapping("/{pid}")
-    public DeleteCartItemResponseDto deleteCartItem(JwtAuthenticationToken jwtToken, @PathVariable Integer pid){
+    public SuccessResponseDto deleteCartItem(JwtAuthenticationToken jwtToken, @PathVariable Integer pid){
         FirebaseUserData firebaseUserData = JwtUtil.getFirebaseUserData(jwtToken);
-        return new DeleteCartItemResponseDto(cartItemService.deletedCartItem(firebaseUserData,pid));
+        if(cartItemService.deletedCartItem(firebaseUserData,pid)){
+            return new SuccessResponseDto();
+        }
+        throw new UpdateCartItemNotAllowedException("Cannot delete cart item.");
+
     }
 
 

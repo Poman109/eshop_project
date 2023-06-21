@@ -12,10 +12,10 @@ public class CartItemEntity {
     private Integer cid;
     @ManyToOne
     @JoinColumn(name="product_id",nullable = false)
-    private ProductEntity pid;
+    private ProductEntity product;
     @ManyToOne
     @JoinColumn(name="user_id",nullable = false)
-    private UserEntity uid;
+    private UserEntity user;
     @Column(nullable = false)
     private Integer quantity;
 
@@ -30,20 +30,20 @@ public class CartItemEntity {
         this.cid = cid;
     }
 
-    public ProductEntity getPid() {
-        return pid;
+    public ProductEntity getProduct() {
+        return product;
     }
 
-    public void setPid(ProductEntity pid) {
-        this.pid = pid;
+    public void setProduct(ProductEntity pid) {
+        this.product = pid;
     }
 
-    public UserEntity getUid() {
-        return uid;
+    public UserEntity getUser() {
+        return user;
     }
 
-    public void setUid(UserEntity uid) {
-        this.uid = uid;
+    public void setUser(UserEntity uid) {
+        this.user = uid;
     }
 
     public Integer getQuantity() {

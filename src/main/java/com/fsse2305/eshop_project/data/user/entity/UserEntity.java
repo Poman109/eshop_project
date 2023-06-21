@@ -19,10 +19,10 @@ public class UserEntity {
     @Column(nullable = false)
     private String email;
 
-    @OneToMany(mappedBy = "uid")
+    @OneToMany(mappedBy = "user")
     private List<CartItemEntity> UserCartItemsArray = new ArrayList<>();
 
-    @OneToMany(mappedBy="buyerUid")
+    @OneToMany(mappedBy= "User")
     private List<TransactionEntity> transactionList = new ArrayList<>();
 
     public UserEntity(FirebaseUserData firebaseUserData){

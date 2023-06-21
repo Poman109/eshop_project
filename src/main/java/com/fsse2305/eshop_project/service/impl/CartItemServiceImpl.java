@@ -1,13 +1,11 @@
 package com.fsse2305.eshop_project.service.impl;
 
-import com.fsse2305.eshop_project.data.Status;
 import com.fsse2305.eshop_project.data.cart.domainObject.CartItemDetailsData;
-import com.fsse2305.eshop_project.data.cart.domainObject.CreatedCartItemData;
-import com.fsse2305.eshop_project.data.cart.domainObject.DeletedCartItemData;
 import com.fsse2305.eshop_project.data.cart.entity.CartItemEntity;
 import com.fsse2305.eshop_project.data.product.entity.ProductEntity;
 import com.fsse2305.eshop_project.data.user.domainObject.FirebaseUserData;
 import com.fsse2305.eshop_project.data.user.entity.UserEntity;
+import com.fsse2305.eshop_project.exception.ProductNotFoundException;
 import com.fsse2305.eshop_project.exception.UpdateCartItemNotAllowedException;
 import com.fsse2305.eshop_project.repository.CartItemRepository;
 import com.fsse2305.eshop_project.service.CartItemService;
@@ -18,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CartItemServiceImpl implements CartItemService {
@@ -32,23 +31,30 @@ public class CartItemServiceImpl implements CartItemService {
     }
 
     @Override
-    public CreatedCartItemData putCartItem(FirebaseUserData firebaseUserData, Integer pid, Integer quantity){
+    public Boolean putCartItem(FirebaseUserData firebaseUserData, Integer pid, Integer quantity){
         UserEntity userEntity =userService.getEntityByFirebaseUserData(firebaseUserData);
         ProductEntity productEntity = productService.getProductEntity(pid);
-        if(productEntity.getStock() < quantity){
+        if(!checkHasStock(productEntity,quantity)){
             throw new UpdateCartItemNotAllowedException("Not enough stock!");
         }
-        for(CartItemEntity cartItemEntity:userEntity.getUserCartItemsArray()){
-            if(cartItemEntity.getPid().getPid()==pid){
-                throw new UpdateCartItemNotAllowedException("Product has been added to cart already.");
+
+        Optional<CartItemEntity> optionalCartItemEntity = cartItemRepository.findByUserUidAndProductPid(userEntity.getUid(),productEntity.getPid());
+        if (optionalCartItemEntity.isEmpty()){
+            CartItemEntity cartItemEntity = new CartItemEntity();
+            cartItemEntity.setUser(userEntity);
+            cartItemEntity.setProduct(productEntity);
+            cartItemEntity.setQuantity(quantity);
+            cartItemRepository.save(cartItemEntity);
+            return true;
+        } else {
+            if(!checkHasStock(productEntity,optionalCartItemEntity.get().getQuantity()+quantity)){
+                throw new UpdateCartItemNotAllowedException("Not enough stock!");
+            } else {
+                optionalCartItemEntity.get().setQuantity(optionalCartItemEntity.get().getQuantity()+quantity);
+                cartItemRepository.save(optionalCartItemEntity.get());
+                return true;
             }
         }
-        CartItemEntity cartItemEntity = new CartItemEntity();
-        cartItemEntity.setUid(userEntity);
-        cartItemEntity.setPid(productEntity);
-        cartItemEntity.setQuantity(quantity);
-        cartItemRepository.save(cartItemEntity);
-        return new CreatedCartItemData(Status.SUCCESS);
     }
 
     @Override
@@ -69,7 +75,7 @@ public class CartItemServiceImpl implements CartItemService {
             throw new UpdateCartItemNotAllowedException("Not enough stock!");
         }
         for(CartItemEntity cartItemEntity:userEntity.getUserCartItemsArray()){
-            if (cartItemEntity.getPid().getPid() != pid){
+            if (cartItemEntity.getProduct().getPid() != pid){
                 continue;
             }
             if(quantity == 0){
@@ -85,15 +91,33 @@ public class CartItemServiceImpl implements CartItemService {
     }
 
     @Override
-    public DeletedCartItemData deletedCartItem(FirebaseUserData firebaseUserData, Integer pid){
+    public Boolean deletedCartItem(FirebaseUserData firebaseUserData, Integer pid){
         UserEntity userEntity =userService.getEntityByFirebaseUserData(firebaseUserData);
-        for(CartItemEntity cartItemEntity:userEntity.getUserCartItemsArray()){
-            if (cartItemEntity.getPid().getPid() != pid){
-                continue;
-            }
-            cartItemRepository.delete(cartItemEntity);
-            return new DeletedCartItemData(Status.SUCCESS );
+
+        Optional<CartItemEntity> optionalCartItemEntity = cartItemRepository.findByUserUidAndProductPid(userEntity.getUid(),pid);
+        if(optionalCartItemEntity.isEmpty()){
+            throw new UpdateCartItemNotAllowedException("No product id :"+pid +"in cart.");
         }
-        throw new UpdateCartItemNotAllowedException("No product id :"+pid +"in cart.");
+        cartItemRepository.delete(optionalCartItemEntity.get());
+        return true;
+
     }
+
+    public Boolean checkHasStock(ProductEntity productEntity,Integer quantity){
+            return productEntity.getStock()>= quantity;
+
+    }
+
+    @Override
+    public List<CartItemEntity> getCartItemByUid(Integer userId){
+        Optional<List<CartItemEntity>> optionalCartItemEntityList =  cartItemRepository.findByUserUid(userId);
+        if(optionalCartItemEntityList.isEmpty()){
+            throw new ProductNotFoundException("No item in cart.");
+        }
+        return optionalCartItemEntityList.get();
+    }
+
+
+
+
 }
