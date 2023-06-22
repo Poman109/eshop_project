@@ -1,6 +1,7 @@
 package com.fsse2305.eshop_project.data.transaction.entity;
 
 import com.fsse2305.eshop_project.data.Status;
+import com.fsse2305.eshop_project.data.transactionProduct.entity.TransactionProductEntity;
 import com.fsse2305.eshop_project.data.user.entity.UserEntity;
 import jakarta.persistence.*;
 
@@ -8,6 +9,7 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -32,10 +34,12 @@ public class TransactionEntity {
     public TransactionEntity() {
     }
 
-    public TransactionEntity(UserEntity userEntity) {
+    public TransactionEntity(UserEntity userEntity, BigDecimal total) {
         this.User = userEntity;
+        setDatetime();
         this.status = Status.PREPARE;
-        setDatetimeToCurrentTime();
+        this.total = total;
+
     }
 
     public Integer getTid() {
@@ -82,8 +86,8 @@ public class TransactionEntity {
         return datetime;
     }
 
-    public void setDatetimeToCurrentTime() {
-        long currentTimeMillis = System.currentTimeMillis();
-        this.datetime = new Timestamp(currentTimeMillis);
+    public void setDatetime() {
+        Date date = new Date();
+        this.datetime = new Timestamp(date.getTime());
     }
 }

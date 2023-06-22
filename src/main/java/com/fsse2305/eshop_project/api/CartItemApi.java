@@ -1,7 +1,7 @@
 package com.fsse2305.eshop_project.api;
 
 import com.fsse2305.eshop_project.data.cart.domainObject.CartItemDetailsData;
-import com.fsse2305.eshop_project.data.cart.dto.CartItemDetailResponseDto;
+import com.fsse2305.eshop_project.data.cart.dto.CreateCartItemDetailResponseDto;
 import com.fsse2305.eshop_project.data.cart.dto.SuccessResponseDto;
 import com.fsse2305.eshop_project.data.user.domainObject.FirebaseUserData;
 import com.fsse2305.eshop_project.exception.UpdateCartItemNotAllowedException;
@@ -35,20 +35,20 @@ public class CartItemApi {
     }
 
     @GetMapping()
-    public List<CartItemDetailResponseDto> getCartItem(JwtAuthenticationToken jwtToken){
+    public List<CreateCartItemDetailResponseDto> getCartItem(JwtAuthenticationToken jwtToken){
         FirebaseUserData firebaseUserData = JwtUtil.getFirebaseUserData(jwtToken);
-        List<CartItemDetailResponseDto> cartItemDetailResponseArray = new ArrayList<>();
+        List<CreateCartItemDetailResponseDto> cartItemDetailResponseArray = new ArrayList<>();
         for(CartItemDetailsData cartItemDetailsData: cartItemService.getUserCart(firebaseUserData)){
-            cartItemDetailResponseArray.add(new CartItemDetailResponseDto(cartItemDetailsData));
+            cartItemDetailResponseArray.add(new CreateCartItemDetailResponseDto(cartItemDetailsData));
         }
         return cartItemDetailResponseArray;
     }
 
     @PatchMapping("/{pid}/{quantity}")
-    public CartItemDetailResponseDto updateCartItemQuantity(JwtAuthenticationToken jwtToken, @PathVariable Integer pid, @PathVariable Integer quantity) {
+    public CreateCartItemDetailResponseDto updateCartItemQuantity(JwtAuthenticationToken jwtToken, @PathVariable Integer pid, @PathVariable Integer quantity) {
         FirebaseUserData firebaseUserData = JwtUtil.getFirebaseUserData(jwtToken);
 
-        return new CartItemDetailResponseDto(cartItemService.updateCartItemQuantity(firebaseUserData,pid,quantity));
+        return new CreateCartItemDetailResponseDto(cartItemService.updateCartItemQuantity(firebaseUserData,pid,quantity));
     }
 
     @DeleteMapping("/{pid}")

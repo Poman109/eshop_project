@@ -1,7 +1,8 @@
-package com.fsse2305.eshop_project.data.transaction.entity;
+package com.fsse2305.eshop_project.data.transactionProduct.entity;
 
 import com.fsse2305.eshop_project.data.cart.entity.CartItemEntity;
 import com.fsse2305.eshop_project.data.product.entity.ProductEntity;
+import com.fsse2305.eshop_project.data.transaction.entity.TransactionEntity;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;

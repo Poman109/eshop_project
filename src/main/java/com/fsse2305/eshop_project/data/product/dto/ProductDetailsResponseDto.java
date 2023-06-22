@@ -14,6 +14,9 @@ public class ProductDetailsResponseDto {
     private BigDecimal price;
     private Integer stock;
 
+    public ProductDetailsResponseDto() {
+    }
+
     public ProductDetailsResponseDto(ProductDetailsData productDetailsData){
         this.pid = productDetailsData.getPid();
         this.name = productDetailsData.getName();
