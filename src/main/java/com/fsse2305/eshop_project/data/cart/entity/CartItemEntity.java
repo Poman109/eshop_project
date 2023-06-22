@@ -22,6 +22,12 @@ public class CartItemEntity {
     public CartItemEntity() {
     }
 
+    public CartItemEntity( ProductEntity product, UserEntity user, Integer quantity) {
+        this.product = product;
+        this.user = user;
+        this.quantity = quantity;
+    }
+
     public Integer getCid() {
         return cid;
     }

@@ -11,6 +11,7 @@ import com.fsse2305.eshop_project.repository.TransactionRepository;
 import com.fsse2305.eshop_project.service.CartItemService;
 import com.fsse2305.eshop_project.service.TransactionService;
 import com.fsse2305.eshop_project.service.UserService;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -51,6 +52,14 @@ public class TransactionServiceImpl implements TransactionService {
 
             return new TransactionDetailsData(transaction,transactionProductEntityList);
     }
+
+//    public TransactionDetailsData getTransactionById(FirebaseUserData firebaseUserData,Integer tid){
+//
+//    }
+
+
+
+
 
     public BigDecimal getTotalPriceBySubtotal(List<CartItemEntity> cartItemEntityList){
         BigDecimal total = BigDecimal.ZERO;

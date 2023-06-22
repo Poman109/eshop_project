@@ -58,9 +58,7 @@ public class CartItemApi {
             return new SuccessResponseDto();
         }
         throw new UpdateCartItemNotAllowedException("Cannot delete cart item.");
-
     }
-
 
 
 }
