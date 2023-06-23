@@ -1,4 +1,4 @@
-package com.fsse2305.eshop_project.data.cart.dto;
+package com.fsse2305.eshop_project.data;
 
 public class SuccessResponseDto {
     public String result;

@@ -1,5 +1,6 @@
 package com.fsse2305.eshop_project.service.impl;
 
+import com.fsse2305.eshop_project.data.Status;
 import com.fsse2305.eshop_project.data.cart.entity.CartItemEntity;
 import com.fsse2305.eshop_project.data.transaction.domainObject.TransactionDetailsData;
 import com.fsse2305.eshop_project.data.transaction.entity.TransactionEntity;
@@ -65,7 +66,20 @@ public class TransactionServiceImpl implements TransactionService {
         } else{
                 return new TransactionDetailsData(optionalTransactionEntity.get(),transactionProductService.getTransactionItemList(optionalTransactionEntity.get()));
             }
-        
+
+    }
+
+    @Override
+    public Boolean updateTransactionStatus(FirebaseUserData firebaseUserData,Integer tid){
+        UserEntity userEntity =userService.getEntityByFirebaseUserData(firebaseUserData);
+        Optional<TransactionEntity> optionalTransactionEntity = transactionRepository.findByTidAndUser(tid,userEntity);
+        if(optionalTransactionEntity.isEmpty()){
+            throw new TransactionNotAllowException("No this transaction in account.");
+        } else {
+            optionalTransactionEntity.get().setStatus(Status.PROCESSING);
+            transactionRepository.save(optionalTransactionEntity.get());
+            return true;
+        }
     }
 
 

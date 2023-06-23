@@ -1,8 +1,10 @@
 package com.fsse2305.eshop_project.api;
 
+import com.fsse2305.eshop_project.data.SuccessResponseDto;
 import com.fsse2305.eshop_project.data.transaction.domainObject.TransactionDetailsData;
 import com.fsse2305.eshop_project.data.transaction.dto.TransactionResponseDto;
 import com.fsse2305.eshop_project.data.user.domainObject.FirebaseUserData;
+import com.fsse2305.eshop_project.exception.TransactionNotAllowException;
 import com.fsse2305.eshop_project.service.TransactionService;
 import com.fsse2305.eshop_project.utility.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +35,16 @@ public class TransactionApi {
         FirebaseUserData firebaseUserData = JwtUtil.getFirebaseUserData(jwtToken);
         return new TransactionResponseDto(transactionService.getTransactionById(firebaseUserData,tid));
 
+    }
 
+    @PatchMapping("/{tid}/pay")
+    public SuccessResponseDto updateTransactionStatus(JwtAuthenticationToken jwtToken, @PathVariable Integer tid){
+        FirebaseUserData firebaseUserData = JwtUtil.getFirebaseUserData(jwtToken);
+        if(transactionService.updateTransactionStatus(firebaseUserData,tid)){
+            return new SuccessResponseDto();
+        } else {
+            throw new TransactionNotAllowException("Cannot update transaction status");
+        }
     }
 
 

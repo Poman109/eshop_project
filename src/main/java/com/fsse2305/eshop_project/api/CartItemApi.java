@@ -2,7 +2,7 @@ package com.fsse2305.eshop_project.api;
 
 import com.fsse2305.eshop_project.data.cart.domainObject.CartItemDetailsData;
 import com.fsse2305.eshop_project.data.cart.dto.CreateCartItemDetailResponseDto;
-import com.fsse2305.eshop_project.data.cart.dto.SuccessResponseDto;
+import com.fsse2305.eshop_project.data.SuccessResponseDto;
 import com.fsse2305.eshop_project.data.user.domainObject.FirebaseUserData;
 import com.fsse2305.eshop_project.exception.UpdateCartItemNotAllowedException;
 import com.fsse2305.eshop_project.service.CartItemService;

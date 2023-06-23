@@ -15,6 +15,8 @@ public interface TransactionService {
 
     TransactionDetailsData getTransactionById(FirebaseUserData firebaseUserData, Integer tid);
 
+    Boolean updateTransactionStatus(FirebaseUserData firebaseUserData, Integer tid);
+
     interface TransactionProductService {
         List<TransactionProductEntity> getTransactionItemList(TransactionEntity transaction);
     }
