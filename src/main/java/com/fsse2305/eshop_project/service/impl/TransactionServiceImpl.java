@@ -22,13 +22,15 @@ import java.util.Optional;
 
 @Service
 public class TransactionServiceImpl implements TransactionService {
-
+    private final TransactionProductService transactionProductService;
     private  final TransactionProductRepository transactionProductRepository;
     private final TransactionRepository transactionRepository;
     private final CartItemService cartItemService;
     private final UserService userService;
     @Autowired
-    public TransactionServiceImpl( TransactionProductRepository transactionProductRepository, TransactionRepository transactionRepository, CartItemService cartItemService, UserService userService) {
+    public TransactionServiceImpl(TransactionProductService transactionProductService, TransactionProductRepository transactionProductRepository,
+                                  TransactionRepository transactionRepository, CartItemService cartItemService, UserService userService) {
+        this.transactionProductService = transactionProductService;
         this.transactionProductRepository = transactionProductRepository;
         this.transactionRepository = transactionRepository;
         this.cartItemService = cartItemService;
@@ -61,15 +63,12 @@ public class TransactionServiceImpl implements TransactionService {
         if (optionalTransactionEntity.isEmpty()){
             throw new TransactionNotAllowException("No this transaction in account.");
         } else{
-            Optional<List<TransactionProductEntity>> transactionItemList =transactionProductRepository.findAllByTransaction(optionalTransactionEntity.get());
-            if(transactionItemList.isEmpty()){
-                throw new TransactionNotAllowException("No transaction Item in this transaction");
-            } else {
-                return new TransactionDetailsData(optionalTransactionEntity.get(),transactionItemList.get());
+                return new TransactionDetailsData(optionalTransactionEntity.get(),transactionProductService.getTransactionItemList(optionalTransactionEntity.get()));
             }
-        }
-
+        
     }
+
+
 
 
 
