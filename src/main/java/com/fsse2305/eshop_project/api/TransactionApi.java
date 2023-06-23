@@ -7,9 +7,7 @@ import com.fsse2305.eshop_project.service.TransactionService;
 import com.fsse2305.eshop_project.utility.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("transaction")
@@ -27,6 +25,14 @@ public class TransactionApi {
         TransactionDetailsData createTransactionDetailsData =  transactionService.createTransaction(firebaseUserData);
         TransactionResponseDto createTransactionResponseDto = new TransactionResponseDto(createTransactionDetailsData);
         return createTransactionResponseDto;
+
+    }
+
+    @GetMapping("/{tid}")
+    public TransactionResponseDto getTransactionDetails(JwtAuthenticationToken jwtToken, @PathVariable Integer tid){
+        FirebaseUserData firebaseUserData = JwtUtil.getFirebaseUserData(jwtToken);
+        return new TransactionResponseDto(transactionService.getTransactionById(firebaseUserData,tid));
+
 
     }
 

@@ -34,4 +34,15 @@ public class ApiExceptionHandler {
         );
         return new ResponseEntity<>(apiException, badRequest);
     }
+
+    @ExceptionHandler(value = {TransactionNotAllowException.class})
+    public ResponseEntity<Object> handleApiRequestException(TransactionNotAllowException t) {
+        HttpStatus badRequest = HttpStatus.BAD_REQUEST;
+        ApiException apiException = new ApiException(
+                t.getMessage(),
+                badRequest,
+                ZonedDateTime.now(ZoneId.of("Asia/Hong_Kong"))
+        );
+        return new ResponseEntity<>(apiException, badRequest);
+    }
 }

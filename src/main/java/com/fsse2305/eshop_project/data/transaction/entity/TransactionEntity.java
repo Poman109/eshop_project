@@ -20,7 +20,7 @@ public class TransactionEntity {
     private Integer tid;
     @ManyToOne
     @JoinColumn(name="user_id",nullable = false)
-    private UserEntity User;
+    private UserEntity user;
     @Column(nullable = false)
     private Timestamp datetime;
     @Column(nullable = false)
@@ -35,7 +35,7 @@ public class TransactionEntity {
     }
 
     public TransactionEntity(UserEntity userEntity, BigDecimal total) {
-        this.User = userEntity;
+        this.user = userEntity;
         setDatetime();
         this.status = Status.PREPARE;
         this.total = total;
@@ -51,11 +51,11 @@ public class TransactionEntity {
     }
 
     public UserEntity getUser() {
-        return User;
+        return user;
     }
 
     public void setUser(UserEntity buyerUid) {
-        this.User = buyerUid;
+        this.user = buyerUid;
     }
 
     public Status getStatus() {

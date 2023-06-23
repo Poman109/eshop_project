@@ -22,7 +22,7 @@ public class UserEntity {
     @OneToMany(mappedBy = "user")
     private List<CartItemEntity> UserCartItemsArray = new ArrayList<>();
 
-    @OneToMany(mappedBy= "User")
+    @OneToMany(mappedBy= "user")
     private List<TransactionEntity> transactionList = new ArrayList<>();
 
     public UserEntity(FirebaseUserData firebaseUserData){

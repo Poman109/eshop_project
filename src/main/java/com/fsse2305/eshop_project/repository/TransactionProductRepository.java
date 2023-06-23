@@ -9,4 +9,6 @@ import java.util.Optional;
 
 public interface TransactionProductRepository extends CrudRepository<TransactionProductEntity,Integer> {
 
+    Optional<List<TransactionProductEntity>> findAllByTransaction(TransactionEntity transaction);
+
 }
